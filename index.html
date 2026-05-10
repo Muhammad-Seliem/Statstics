@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مراجعة شاملة - إحصاء تطبيقي</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        @media print {
+            body { margin: 0; padding: 0; }
+            .container { margin: 0 auto; padding: 1.2cm; max-width: 100%; box-shadow: none; }
+            .print-btn, .tab-buttons { display: none; }
+            .tab-content { display: block !important; }
+            .step-item, .quiz-question { break-inside: avoid; page-break-inside: avoid; }
+            @page { size: A4; margin: 1.5cm; }
+            body, .container, .step-item, .quiz-question { overflow: visible; word-wrap: break-word; }
+            .theory-section { break-inside: avoid; }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #e8f5ee 0%, #f0f7f4 50%, #e4f0f6 100%);
+            font-family: 'Tajawal', 'Segoe UI', 'Tahoma', 'Traditional Arabic', 'Arial', sans-serif;
+            padding: 20px;
+            direction: rtl;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 28px;
+            padding: 25px 30px;
+            box-shadow: 0 10px 40px rgba(30,111,92,0.13);
+            overflow-x: auto;
+        }
+        .print-btn {
+            background: linear-gradient(135deg, #1e6f5c, #2c8c74);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 35px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-family: inherit;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(30,111,92,0.3);
+        }
+        .lecturer {
+            background: linear-gradient(135deg, #1e6f5c, #2c8c74);
+            color: white;
+            padding: 18px;
+            border-radius: 40px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(30,111,92,0.25);
+        }
+        .lecturer h3 { font-size: 1.4rem; margin-bottom: 5px; font-weight: 800; }
+        .lecturer p { font-size: 0.9rem; margin: 3px 0; }
+
+        /* ===== THEORY SECTION ===== */
+        .theory-section {
+            background: linear-gradient(135deg, #f0faf6, #e8f5ee);
+            border: 2px solid #a8d8c4;
+            border-radius: 22px;
+            padding: 18px 22px;
+            margin: 20px 0;
+        }
+        .theory-section-title {
+            background: linear-gradient(135deg, #1e6f5c, #2c8c74);
+            color: white;
+            display: inline-block;
+            padding: 5px 18px;
+            border-radius: 30px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        @media (max-width: 650px) { .theory-grid { grid-template-columns: 1fr; } }
+        .theory-card {
+            background: white;
+            border-radius: 16px;
+            padding: 13px 16px;
+            border-right: 5px solid #f4b942;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .theory-card.green { border-right-color: #2c8c74; }
+        .theory-card.red   { border-right-color: #e05a5a; }
+        .theory-card.blue  { border-right-color: #4a90c4; }
+        .theory-card-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #1a5d4c;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .theory-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .theory-card ul li {
+            font-size: 0.88rem;
+            color: #444;
+            padding: 4px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            line-height: 1.5;
+        }
+        .theory-card ul li:last-child { border-bottom: none; }
+        .theory-card ul li::before {
+            content: "◈ ";
+            color: #f4b942;
+            font-size: 0.7rem;
+        }
+        .theory-card.green ul li::before { color: #2c8c74; }
+        .theory-card.red ul li::before   { color: #e05a5a; }
+        .theory-card.blue ul li::before  { color: #4a90c4; }
+        .theory-wide {
+            grid-column: 1 / -1;
+        }
+
+        /* TABS */
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .tab-btn {
+            background: #eef2f0;
+            border: 2px solid #b7d5c8;
+            color: #1a5d4c;
+            padding: 10px 20px;
+            border-radius: 35px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover { background: #d4ede3; }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #1e6f5c, #2c8c74);
+            color: white;
+            border-color: #1e6f5c;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* SHARED */
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            color: #1a5d4c;
+            border-bottom: 4px solid #f4b942;
+            display: inline-block;
+            width: auto;
+            margin: 15px auto;
+            font-weight: 800;
+        }
+        .section-title {
+            background: #f4b942;
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 20px 0 15px;
+        }
+        .law-card {
+            background: #fef9e6;
+            border-right: 6px solid #f4a261;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 25px;
+        }
+        .law-name { font-weight: bold; font-size: 1rem; color: #bc6c25; margin-bottom: 6px; }
+        .law-formula {
+            text-align: center;
+            background: white;
+            padding: 8px;
+            border-radius: 20px;
+            direction: ltr;
+            font-size: 0.9rem;
+        }
+        .law-note { font-size: 0.82rem; color: #666; text-align: center; margin-top: 5px; }
+        .step-item {
+            margin: 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #ffb347;
+        }
+        .step-item:last-child { border-bottom: none; }
+        .step-title {
+            background: #fff0e0;
+            display: inline-block;
+            padding: 4px 15px;
+            border-radius: 35px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: #c75c2e;
+            margin-bottom: 10px;
+        }
+        .law-line {
+            background: #f5f5f5;
+            padding: 5px 10px;
+            border-radius: 12px;
+            margin: 8px 0;
+            direction: ltr;
+            text-align: center;
+            overflow-x: auto;
+            word-break: break-word;
+        }
+        .substitution-line {
+            background: #fff3e0;
+            padding: 5px 10px;
+            border-radius: 12px;
+            margin: 8px 0;
+            direction: ltr;
+            text-align: center;
+            overflow-x: auto;
+            word-break: break-word;
+        }
+        .result {
+            background: #f9e45b;
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .quiz-question {
+            background: #fff7e8;
+            border: 2px solid #ffcd94;
+            border-radius: 28px;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .quiz-question p { font-weight: bold; font-size: 1rem; margin-bottom: 10px; }
+        .options { margin-right: 20px; }
+        .option {
+            margin: 6px 0;
+            padding: 4px 10px;
+            border-radius: 25px;
+            background: #ffffff;
+            display: inline-block;
+            width: auto;
+            min-width: 140px;
+        }
+        .correct-option {
+            background: #c8e6d9;
+            border-right: 4px solid #2d6a4f;
+            font-weight: bold;
+        }
+        .data-box {
+            background: #eef2f0;
+            border-radius: 20px;
+            padding: 10px;
+            text-align: center;
+            margin: 12px 0;
+            word-break: break-word;
+        }
+        .part-header {
+            background: linear-gradient(135deg, #1e6f5c, #2c8c74);
+            color: white;
+            padding: 8px 22px;
+            border-radius: 35px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            margin: 28px 0 16px;
+            display: inline-block;
+        }
+        .tbl { margin: 8px auto; border-collapse: collapse; direction: rtl; font-size: 0.9rem; }
+        .tbl th { background: #2c8c74; color: white; padding: 6px 14px; }
+        .tbl td { padding: 5px 14px; text-align: center; border-bottom: 1px solid #e0e0e0; }
+        .tbl tr:nth-child(even) td { background: #f0faf5; }
+        .tbl tr.total td { background: #fff3cd; font-weight: bold; border-top: 2px solid #f4b942; }
+        footer { text-align: center; margin-top: 30px; color: #5f7d6e; font-size: 0.8rem; }
+        .step-item, .quiz-question, .law-card, .container { word-wrap: break-word; overflow-wrap: break-word; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <button class="print-btn" onclick="window.print();">🖨️ طباعة / حفظ كـ PDF (A4)</button>
+
+    <div class="lecturer">
+        <h3>🧑‍🏫 د. محمد المتولي سليم</h3>
+        <p>📚 برنامج نظم معلومات الأعمال – المستوى الرابع</p>
+        <p>📊 المقرر: الإحصاء التطبيقي (Applied Statistics)</p>
+    </div>
+
+    <div class="tab-buttons">
+        <button class="tab-btn active" onclick="showTab('tab-theory',this)">📘 النظري</button>
+        <button class="tab-btn" onclick="showTab('tab-central',this)">📊 مقاييس النزعة المركزية</button>
+        <button class="tab-btn" onclick="showTab('tab-dispersion',this)">📏 مقاييس التشتت</button>
+        <button class="tab-btn" onclick="showTab('tab-regression',this)">📈 الانحدار والارتباط</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 0 : النظري                                               -->
+    <!-- ============================================================ -->
+    <div id="tab-theory" class="tab-content active">
+        <div style="text-align:center;"><h1>📘 المفاهيم النظرية الأساسية</h1></div>
+        <div class="theory-grid">
+
+            <div class="theory-card blue">
+                <div class="theory-card-title">🎯 أهداف الإحصاء</div>
+                <ul>
+                    <li>جمع البيانات وتنظيمها وعرضها بصورة مفيدة</li>
+                    <li>وصف الظاهرة وتلخيصها بمقاييس كمية دقيقة</li>
+                    <li>الاستدلال والتعميم من العينة على المجتمع</li>
+                    <li>اتخاذ القرارات في ضوء البيانات المتاحة</li>
+                    <li>اختبار الفروض والتنبؤ بالقيم المستقبلية</li>
+                </ul>
+            </div>
+
+            <div class="theory-card green">
+                <div class="theory-card-title">🔎 المعلمة (Parameter) والإحصاءة (Statistic)</div>
+                <ul>
+                    <li><strong>المعلمة:</strong> قيمة ثابتة تُحسب من المجتمع كله (مثل μ، σ)</li>
+                    <li><strong>الإحصاءة:</strong> قيمة تُحسب من بيانات العينة (مثل X̄، S)</li>
+                    <li>المعلمة مجهولة في الغالب ونقدّرها بالإحصاءة</li>
+                    <li>تتغير الإحصاءة من عينة إلى أخرى بخلاف المعلمة</li>
+                </ul>
+            </div>
+
+            <div class="theory-card">
+                <div class="theory-card-title">✅ مزايا العينة</div>
+                <ul>
+                    <li>توفر الوقت والتكلفة مقارنةً بالحصر الشامل</li>
+                    <li>تُتيح دراسة الحالات التي يستلزم فيها الفحص التدمير</li>
+                    <li>تُعطي نتائج أسرع وأكثر دقة إذا صُمِّمت جيداً</li>
+                    <li>تناسب المجتمعات الكبيرة أو غير المحدودة</li>
+                    <li>تسمح بالرقابة والمتابعة الدقيقة للبيانات</li>
+                </ul>
+            </div>
+
+            <div class="theory-card green">
+                <div class="theory-card-title">📍 مزايا الوسيط</div>
+                <ul>
+                    <li>لا يتأثر بالقيم الشاذة (المتطرفة) كالمتوسط</li>
+                    <li>يمثّل القيمة الوسطى الفعلية لمجموعة البيانات</li>
+                    <li>يُحسب بسهولة حتى في البيانات غير الكاملة</li>
+                    <li>مناسب للبيانات المرتّبة ترتيبياً (Ordinal)</li>
+                    <li>مفيد في التوزيعات الملتوية (غير المتماثلة)</li>
+                </ul>
+            </div>
+
+            <div class="theory-card red theory-wide">
+                <div class="theory-card-title">⚠️ عيوب المتوسط الحسابي</div>
+                <ul>
+                    <li>يتأثر بشدة بالقيم الشاذة (المرتفعة أو المنخفضة جداً) مما يُشوّه التمثيل</li>
+                    <li>قد لا يكون له وجود فعلي في البيانات (كأن يكون 3.5 لعدد أشخاص)</li>
+                    <li>لا يصلح للبيانات ذات التوزيع الملتوي الشديد (Skewed)</li>
+                    <li>يعطي وزناً متساوياً لجميع القيم بغض النظر عن تكرارها أو أهميتها</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 1 : مقاييس النزعة المركزية                              -->
+    <!-- ============================================================ -->
+    <div id="tab-central" class="tab-content">
+        <div style="text-align:center;"><h1>📊 مقاييس النزعة المركزية</h1></div>
+
+        <!-- ---- قوانين غير مبوبة ---- -->
+        <div style="text-align:right;"><span class="part-header">🔸 أولاً: البيانات غير المبوبة – القوانين</span></div>
+        <div class="law-card">
+            <div class="law-name">⚖️ الوسط الحسابي</div>
+            <div class="law-formula">\(\bar{X}=\dfrac{\sum X}{n}\)</div>
+        </div>
+        <div class="law-card">
+            <div class="law-name">📍 الوسيط (Median) – بيانات غير مبوبة</div>
+            <div class="law-formula">
+                رتّب تصاعدياً ثم:<br>
+                n فردي &rarr; الوسيط = القيمة في الموضع \(\dfrac{n+1}{2}\)
+            </div>
+        </div>
+        <div class="law-card">
+            <div class="law-name">🏆 المنوال (Mode)</div>
+            <div class="law-formula">القيمة الأكثر تكراراً في مجموعة البيانات</div>
+        </div>
+
+        <!-- ---- مثال غير مبوبة ---- -->
+        <div style="text-align:center;"><span class="section-title">📖 مثال (1) – بيانات غير مبوبة</span></div>
+        <div class="step-item">
+            <div class="step-title">📝 نص السؤال</div>
+            <div class="data-box">درجات 9 طلاب: <strong>6، 3، 8، 5، 7، 3، 9، 5، 8</strong> &nbsp; (n=9)</div>
+            <p style="margin-top:8px;">المطلوب: الوسط الحسابي، الوسيط، المنوال.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-title">1. الوسط الحسابي</div>
+            <div class="law-line">القانون: \(\bar{X}=\dfrac{\sum X}{n}\)</div>
+            <div class="substitution-line">\(\bar{X}=\dfrac{6+3+8+5+7+3+9+5+8}{9}=\dfrac{54}{9}=6\)</div>
+            <div class="result">\(\bar{X}=6\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">2. الوسيط</div>
+            <div class="law-line">نرتّب تصاعدياً: 3، 3، 5، 5، 6، 7، 8، 8، 9</div>
+            <div class="substitution-line">n=9 (فردي) &rarr; الموضع = \(\dfrac{9+1}{2}=5\) &rarr; القيمة الخامسة = 6</div>
+            <div class="result">الوسيط = 6</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">3. المنوال</div>
+            <div class="substitution-line">3 تكررت مرتين، 5 تكررت مرتين، 8 تكررت مرتين — ثلاثة منوالات</div>
+            <div class="result">المنوال = 3 و 5 و 8</div>
+        </div>
+
+        <!-- ---- قوانين مبوبة ---- -->
+        <div style="text-align:right;"><span class="part-header">🔹 ثانياً: البيانات المبوبة – القوانين</span></div>
+        <div class="law-card">
+            <div class="law-name">⚖️ الوسط الحسابي المرجح</div>
+            <div class="law-formula">\(\bar{X}=\dfrac{\sum f\cdot x}{\sum f}\)</div>
+            <div class="law-note">f = التكرار &nbsp;|&nbsp; x = مركز الفئة</div>
+        </div>
+
+        <div class="law-card">
+            <div class="law-name">📍 الوسيط للبيانات المبوبة</div>
+            <div class="law-formula">
+                \[ Me = L + \frac{\dfrac{n}{2} - F_1}{F_2 - F_0} \times h \]
+            </div>
+            <div class="law-note" style="text-align:right; padding: 10px 15px; line-height:2;">
+                <strong>L</strong> = الحد الأدنى للفئة الوسيطة &nbsp;&nbsp;
+                <strong>h</strong> = طول الفئة &nbsp;&nbsp;
+                <strong>n</strong> = مجموع التكرارات<br>
+                <strong>F₁</strong> = التكرار المتراكم للفئة <u>السابقة</u> مباشرةً للفئة الوسيطة &nbsp;← <em>تكرار سابق</em><br>
+                <strong>F₂</strong> = التكرار المتراكم <u>للفئة الوسيطة</u> نفسها &nbsp;← <em>تكرار لاحق</em><br>
+                <strong>F₀</strong> = التكرار المتراكم للفئة <u>التي قبل السابقة</u> &nbsp;← <em>تكرار أسبق</em>
+            </div>
+        </div>
+
+        <div class="law-card">
+            <div class="law-name">🏆 المنوال للبيانات المبوبة</div>
+            <div class="law-formula">\(Mo=L+\dfrac{d_1}{d_1+d_2}\times h\)</div>
+            <div class="law-note">d₁ = تكرار المنوال − تكرار الفئة السابقة &nbsp;|&nbsp; d₂ = تكرار المنوال − تكرار الفئة التالية</div>
+        </div>
+
+        <!-- ---- مثال مبوب قيم مفردة ---- -->
+        <div style="text-align:center;"><span class="section-title">📖 مثال (2) – بيانات مبوبة (قيم مفردة)</span></div>
+        <div class="step-item">
+            <div class="step-title">📝 نص السؤال</div>
+            <div class="data-box">
+                <table class="tbl">
+                    <tr><th>القيمة (x)</th><th>التكرار (f)</th><th>f × x</th><th>التكرار المتراكم</th></tr>
+                    <tr><td>10</td><td>3</td><td>30</td><td>3</td></tr>
+                    <tr><td>20</td><td>7</td><td>140</td><td>10</td></tr>
+                    <tr><td>30</td><td>12</td><td>360</td><td>22</td></tr>
+                    <tr><td>40</td><td>6</td><td>240</td><td>28</td></tr>
+                    <tr><td>50</td><td>2</td><td>100</td><td>30</td></tr>
+                    <tr class="total"><td>المجموع</td><td>30</td><td>870</td><td>—</td></tr>
+                </table>
+            </div>
+            <p style="margin-top:8px;">المطلوب: الوسط الحسابي، الوسيط، المنوال.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-title">1. الوسط الحسابي</div>
+            <div class="law-line">القانون: \(\bar{X}=\dfrac{\sum f\cdot x}{\sum f}\)</div>
+            <div class="substitution-line">\(\bar{X}=\dfrac{870}{30}=29\)</div>
+            <div class="result">\(\bar{X}=29\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">2. الوسيط</div>
+            <div class="law-line">\(\dfrac{n}{2}=\dfrac{30}{2}=15\) &rarr; أول تكرار متراكم &ge; 15 هو 22 &rarr; القيمة المقابلة = 30</div>
+            <div class="result">الوسيط = 30</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">3. المنوال</div>
+            <div class="substitution-line">القيمة 30 تكررت 12 مرة (الأعلى تكراراً)</div>
+            <div class="result">المنوال = 30</div>
+        </div>
+
+        <!-- ---- مثال مبوب جدول فئات ---- -->
+        <div style="text-align:center;"><span class="section-title">📖 مثال (3) – بيانات مبوبة (جدول ذو فئات)</span></div>
+        <div class="step-item">
+            <div class="step-title">📝 نص السؤال</div>
+            <div class="data-box">
+                <table class="tbl">
+                    <tr><th>الفئة</th><th>f</th><th>x (مركز الفئة)</th><th>f×x</th><th>تكرار متراكم</th></tr>
+                    <tr><td>10 – 20</td><td>4</td><td>15</td><td>60</td><td>4</td></tr>
+                    <tr><td>20 – 30</td><td>8</td><td>25</td><td>200</td><td>12</td></tr>
+                    <tr><td>30 – 40</td><td>14</td><td>35</td><td>490</td><td>26</td></tr>
+                    <tr><td>40 – 50</td><td>10</td><td>45</td><td>450</td><td>36</td></tr>
+                    <tr><td>50 – 60</td><td>4</td><td>55</td><td>220</td><td>40</td></tr>
+                    <tr class="total"><td>المجموع</td><td>40</td><td>—</td><td>1420</td><td>—</td></tr>
+                </table>
+            </div>
+            <p style="margin-top:8px;">المطلوب: الوسط الحسابي، الوسيط، المنوال.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-title">1. الوسط الحسابي</div>
+            <div class="law-line">القانون: \(\bar{X}=\dfrac{\sum f\cdot x}{\sum f}\)</div>
+            <div class="substitution-line">\(\bar{X}=\dfrac{1420}{40}=35.5\)</div>
+            <div class="result">\(\bar{X}=35.5\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">2. الوسيط</div>
+            <div class="law-line">
+                القانون: \(Me=L+\dfrac{\frac{n}{2}-F_1}{F_2-F_0}\times h\)
+            </div>
+            <div class="substitution-line">
+                \(\dfrac{n}{2}=20\) &rarr; أول تكرار متراكم &ge; 20 هو 26 &rarr; الفئة الوسيطة (30–40)<br>
+                L=30 &nbsp;|&nbsp; F₁ (تكرار سابق)=12 &nbsp;|&nbsp; F₂ (تكرار لاحق)=26 &nbsp;|&nbsp; F₀ (تكرار أسبق)=4 &nbsp;|&nbsp; h=10<br>
+                \(Me=30+\dfrac{20-12}{26-4}\times10=30+\dfrac{8}{22}\times10=30+3.64\approx33.64\)
+            </div>
+            <div class="result">الوسيط &asymp; 33.64</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">3. المنوال</div>
+            <div class="law-line">القانون: \(Mo=L+\dfrac{d_1}{d_1+d_2}\times h\)</div>
+            <div class="substitution-line">
+                الفئة المنوالية (30–40) تكرارها 14 (الأعلى)<br>
+                d₁=14−8=6 &nbsp;|&nbsp; d₂=14−10=4 &nbsp;|&nbsp; h=10<br>
+                \(Mo=30+\dfrac{6}{6+4}\times10=30+6=36\)
+            </div>
+            <div class="result">المنوال = 36</div>
+        </div>
+
+        <!-- ---- الاختبار ---- -->
+        <div style="text-align:center;"><span class="section-title">🧪 اختبار تدريبي</span></div>
+
+        <div style="background:#fef5e6;border-radius:25px;padding:10px;margin-bottom:15px;text-align:center;">
+            <strong>📊 أسئلة 1–3 – بيانات غير مبوبة:</strong><br>
+            البيانات: 4، 7، 7، 2، 9، 5، 7، 3، 8، 8 &nbsp; (n=10)
+        </div>
+        <div class="quiz-question"><p><strong>سؤال 1:</strong> الوسط الحسابي \(\bar{X}\) يساوي:</p><div class="options"><div class="option">أ) 5</div><div class="option">ب) 5.5</div><div class="option correct-option">ج) 6</div><div class="option">د) 6.5</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 2:</strong> الوسيط (بعد الترتيب: 2،3،4،5،7،7،7،8،8،9) يساوي:</p><div class="options"><div class="option">أ) 5.5</div><div class="option">ب) 6.5</div><div class="option correct-option">ج) 7</div><div class="option">د) 8</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 3:</strong> المنوال يساوي:</p><div class="options"><div class="option">أ) 2</div><div class="option">ب) 5</div><div class="option correct-option">ج) 7</div><div class="option">د) 8</div></div></div>
+
+        <div style="background:#fef5e6;border-radius:25px;padding:10px;margin:15px 0;text-align:center;">
+            <strong>📊 أسئلة 4–6 – بيانات مبوبة (جدول ذو فئات):</strong>
+            <table class="tbl" style="margin-top:8px;">
+                <tr><th>الفئة</th><th>f</th><th>x</th><th>f×x</th><th>تكرار متراكم</th></tr>
+                <tr><td>0 – 10</td><td>5</td><td>5</td><td>25</td><td>5</td></tr>
+                <tr><td>10 – 20</td><td>10</td><td>15</td><td>150</td><td>15</td></tr>
+                <tr><td>20 – 30</td><td>20</td><td>25</td><td>500</td><td>35</td></tr>
+                <tr><td>30 – 40</td><td>10</td><td>35</td><td>350</td><td>45</td></tr>
+                <tr><td>40 – 50</td><td>5</td><td>45</td><td>225</td><td>50</td></tr>
+                <tr class="total"><td>المجموع</td><td>50</td><td>—</td><td>1250</td><td>—</td></tr>
+            </table>
+            \(\bar{X}=25\)
+        </div>
+        <div class="quiz-question"><p><strong>سؤال 4:</strong> الوسط الحسابي المرجح يساوي:</p><div class="options"><div class="option">أ) 20</div><div class="option correct-option">ب) 25</div><div class="option">ج) 27</div><div class="option">د) 30</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 5:</strong> الوسيط (الفئة الوسيطة 20–30، L=20، F₁=15، F₂=35، F₀=5، h=10) يساوي:</p><div class="options"><div class="option">أ) 20</div><div class="option">ب) 22</div><div class="option correct-option">ج) 22.5</div><div class="option">د) 25</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 6:</strong> المنوال (الفئة المنوالية 20–30، d₁=10، d₂=10، h=10) يساوي:</p><div class="options"><div class="option">أ) 20</div><div class="option correct-option">ب) 25</div><div class="option">ج) 27</div><div class="option">د) 30</div></div></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 2 : مقاييس التشتت                                       -->
+    <!-- ============================================================ -->
+    <div id="tab-dispersion" class="tab-content">
+        <div style="text-align:center;"><h1>📏 مقاييس التشتت</h1></div>
+
+        <!-- ---- قوانين غير مبوبة ---- -->
+        <div style="text-align:right;"><span class="part-header">🔸 أولاً: البيانات غير المبوبة – القوانين</span></div>
+        <div class="law-card"><div class="law-name">📐 المدى (Range)</div><div class="law-formula">\(R=X_{\max}-X_{\min}\)</div></div>
+        <div class="law-card">
+            <div class="law-name">📊 التباين البسيط (Variance)</div>
+            <div class="law-formula">\(S^2=\dfrac{\sum X^2-n\bar{X}^2}{n-1}\)</div>
+        </div>
+        <div class="law-card"><div class="law-name">📉 الانحراف المعياري (Std. Deviation)</div><div class="law-formula">\(S=\sqrt{S^2}\)</div></div>
+
+        <!-- ---- مثال غير مبوبة ---- -->
+        <div style="text-align:center;"><span class="section-title">📖 مثال (1) – بيانات غير مبوبة</span></div>
+        <div class="step-item">
+            <div class="step-title">📝 نص السؤال</div>
+            <div class="data-box">
+                رواتب 6 موظفين (بالألف جنيه): <strong>8، 12، 10، 15، 9، 14</strong> &nbsp; (n=6)<br>
+                \(\sum X=68,\quad\sum X^2=806\)
+            </div>
+            <p style="margin-top:8px;">المطلوب: المدى، التباين، الانحراف المعياري.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-title">1. الوسط الحسابي</div>
+            <div class="law-line">\(\bar{X}=\dfrac{68}{6}\approx11.33\)</div>
+            <div class="result">\(\bar{X}\approx11.33\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">2. المدى</div>
+            <div class="law-line">القانون: \(R=X_{\max}-X_{\min}\)</div>
+            <div class="substitution-line">\(R=15-8=7\)</div>
+            <div class="result">المدى = 7</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">3. التباين \(S^2\)</div>
+            <div class="law-line">القانون: \(S^2=\dfrac{\sum X^2-n\bar{X}^2}{n-1}\)</div>
+            <div class="substitution-line">\(S^2=\dfrac{806-6\times(11.33)^2}{5}=\dfrac{806-769.87}{5}=\dfrac{36.13}{5}\approx7.23\)</div>
+            <div class="result">\(S^2\approx7.23\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">4. الانحراف المعياري</div>
+            <div class="law-line">القانون: \(S=\sqrt{S^2}\)</div>
+            <div class="substitution-line">\(S=\sqrt{7.23}\approx2.69\)</div>
+            <div class="result">\(S\approx2.69\)</div>
+        </div>
+
+        <!-- ---- قوانين مبوبة ---- -->
+        <div style="text-align:right;"><span class="part-header">🔹 ثانياً: البيانات المبوبة – القوانين</span></div>
+        <div class="law-card">
+            <div class="law-name">📊 التباين البسيط للبيانات المبوبة</div>
+            <div class="law-formula">\(S^2=\dfrac{\sum f\cdot x^2-n\bar{X}^2}{n-1}\)</div>
+            <div class="law-note">f = التكرار &nbsp;|&nbsp; x = مركز الفئة &nbsp;|&nbsp; \(\bar{X}\) = الوسط المرجح</div>
+        </div>
+        <div class="law-card"><div class="law-name">📉 الانحراف المعياري للبيانات المبوبة</div><div class="law-formula">\(S=\sqrt{\dfrac{\sum f\cdot x^2-n\bar{X}^2}{n-1}}\)</div></div>
+
+        <!-- ---- مثال مبوب قيم مفردة ---- -->
+        <div style="text-align:center;"><span class="section-title">📖 مثال (2) – بيانات مبوبة (قيم مفردة)</span></div>
+        <div class="step-item">
+            <div class="step-title">📝 نص السؤال</div>
+            <div class="data-box">
+                <table class="tbl">
+                    <tr><th>القيمة (x)</th><th>f</th><th>f×x</th><th>x²</th><th>f×x²</th></tr>
+                    <tr><td>5</td><td>4</td><td>20</td><td>25</td><td>100</td></tr>
+                    <tr><td>10</td><td>6</td><td>60</td><td>100</td><td>600</td></tr>
+                    <tr><td>15</td><td>10</td><td>150</td><td>225</td><td>2250</td></tr>
+                    <tr><td>20</td><td>6</td><td>120</td><td>400</td><td>2400</td></tr>
+                    <tr><td>25</td><td>4</td><td>100</td><td>625</td><td>2500</td></tr>
+                    <tr class="total"><td>المجموع</td><td>30</td><td>450</td><td>—</td><td>7850</td></tr>
+                </table>
+            </div>
+            <p style="margin-top:8px;">المطلوب: التباين، الانحراف المعياري.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-title">1. الوسط الحسابي</div>
+            <div class="law-line">\(\bar{X}=\dfrac{450}{30}=15\)</div>
+            <div class="result">\(\bar{X}=15\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">2. التباين \(S^2\)</div>
+            <div class="law-line">القانون: \(S^2=\dfrac{\sum f\cdot x^2-n\bar{X}^2}{n-1}\)</div>
+            <div class="substitution-line">\(S^2=\dfrac{7850-30\times225}{29}=\dfrac{7850-6750}{29}=\dfrac{1100}{29}\approx37.93\)</div>
+            <div class="result">\(S^2\approx37.93\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">3. الانحراف المعياري</div>
+            <div class="law-line">\(S=\sqrt{37.93}\approx6.16\)</div>
+            <div class="result">\(S\approx6.16\)</div>
+        </div>
+
+        <!-- ---- مثال مبوب جدول فئات ---- -->
+        <div style="text-align:center;"><span class="section-title">📖 مثال (3) – بيانات مبوبة (جدول ذو فئات)</span></div>
+        <div class="step-item">
+            <div class="step-title">📝 نص السؤال</div>
+            <div class="data-box">
+                <table class="tbl">
+                    <tr><th>الفئة</th><th>f</th><th>x (مركز الفئة)</th><th>f×x</th><th>x²</th><th>f×x²</th></tr>
+                    <tr><td>10–20</td><td>4</td><td>15</td><td>60</td><td>225</td><td>900</td></tr>
+                    <tr><td>20–30</td><td>8</td><td>25</td><td>200</td><td>625</td><td>5000</td></tr>
+                    <tr><td>30–40</td><td>14</td><td>35</td><td>490</td><td>1225</td><td>17150</td></tr>
+                    <tr><td>40–50</td><td>10</td><td>45</td><td>450</td><td>2025</td><td>20250</td></tr>
+                    <tr><td>50–60</td><td>4</td><td>55</td><td>220</td><td>3025</td><td>12100</td></tr>
+                    <tr class="total"><td>المجموع</td><td>40</td><td>—</td><td>1420</td><td>—</td><td>55400</td></tr>
+                </table>
+            </div>
+            <p style="margin-top:8px;">المطلوب: التباين، الانحراف المعياري.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-title">1. الوسط الحسابي</div>
+            <div class="law-line">\(\bar{X}=\dfrac{1420}{40}=35.5\)</div>
+            <div class="result">\(\bar{X}=35.5\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">2. التباين \(S^2\)</div>
+            <div class="law-line">القانون: \(S^2=\dfrac{\sum f\cdot x^2-n\bar{X}^2}{n-1}\)</div>
+            <div class="substitution-line">
+                \(n\bar{X}^2=40\times(35.5)^2=40\times1260.25=50410\)<br>
+                \(S^2=\dfrac{55400-50410}{39}=\dfrac{4990}{39}\approx127.95\)
+            </div>
+            <div class="result">\(S^2\approx127.95\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">3. الانحراف المعياري</div>
+            <div class="law-line">\(S=\sqrt{127.95}\approx11.31\)</div>
+            <div class="result">\(S\approx11.31\)</div>
+        </div>
+
+        <!-- ---- الاختبار ---- -->
+        <div style="text-align:center;"><span class="section-title">🧪 اختبار تدريبي</span></div>
+
+        <div style="background:#fef5e6;border-radius:25px;padding:10px;margin-bottom:15px;text-align:center;">
+            <strong>📊 أسئلة 1–3 – بيانات غير مبوبة:</strong><br>
+            البيانات: 2، 4، 6، 8، 10 &nbsp; (n=5)<br>
+            \(\sum X=30,\quad\sum X^2=220,\quad\bar{X}=6\)
+        </div>
+        <div class="quiz-question"><p><strong>سؤال 1:</strong> المدى يساوي:</p><div class="options"><div class="option">أ) 6</div><div class="option">ب) 7</div><div class="option correct-option">ج) 8</div><div class="option">د) 10</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 2:</strong> تباين العينة \(S^2\) يساوي:</p><div class="options"><div class="option">أ) 8</div><div class="option correct-option">ب) 10</div><div class="option">ج) 12</div><div class="option">د) 14</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 3:</strong> الانحراف المعياري S يساوي تقريباً:</p><div class="options"><div class="option">أ) 2.8</div><div class="option">ب) 3</div><div class="option correct-option">ج) 3.16</div><div class="option">د) 3.5</div></div></div>
+
+        <div style="background:#fef5e6;border-radius:25px;padding:10px;margin:15px 0;text-align:center;">
+            <strong>📊 أسئلة 4–6 – بيانات مبوبة (جدول ذو فئات):</strong>
+            <table class="tbl" style="margin-top:8px;">
+                <tr><th>الفئة</th><th>f</th><th>x</th><th>f×x</th><th>f×x²</th></tr>
+                <tr><td>0–10</td><td>5</td><td>5</td><td>25</td><td>125</td></tr>
+                <tr><td>10–20</td><td>10</td><td>15</td><td>150</td><td>2250</td></tr>
+                <tr><td>20–30</td><td>20</td><td>25</td><td>500</td><td>12500</td></tr>
+                <tr><td>30–40</td><td>10</td><td>35</td><td>350</td><td>12250</td></tr>
+                <tr><td>40–50</td><td>5</td><td>45</td><td>225</td><td>10125</td></tr>
+                <tr class="total"><td>المجموع</td><td>50</td><td>—</td><td>1250</td><td>37250</td></tr>
+            </table>
+            \(\bar{X}=25\)
+        </div>
+        <div class="quiz-question"><p><strong>سؤال 4:</strong> المدى التقريبي للبيانات المبوبة يساوي:</p><div class="options"><div class="option">أ) 30</div><div class="option">ب) 35</div><div class="option correct-option">ج) 40</div><div class="option">د) 50</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 5:</strong> تباين العينة \(S^2\) يساوي تقريباً:</p><div class="options"><div class="option">أ) 100</div><div class="option correct-option">ب) 127.55</div><div class="option">ج) 150</div><div class="option">د) 200</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 6:</strong> الانحراف المعياري S يساوي تقريباً:</p><div class="options"><div class="option">أ) 10</div><div class="option correct-option">ب) 11.29</div><div class="option">ج) 12.5</div><div class="option">د) 14</div></div></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 3 : الانحدار والارتباط                                   -->
+    <!-- ============================================================ -->
+    <div id="tab-regression" class="tab-content">
+        <div style="text-align:center;"><h1>📈 القوانين الأساسية – الانحدار والارتباط</h1></div>
+
+        <div class="law-card"><div class="law-name">⚖️ الوسط الحسابي</div><div class="law-formula">\(\bar{X}=\dfrac{\sum X}{n}\quad,\quad \bar{Y}=\dfrac{\sum Y}{n}\)</div></div>
+        <div class="law-card"><div class="law-name">📊 تباين العينة</div><div class="law-formula">\(S_X^2=\dfrac{\sum X^2-n\bar{X}^2}{n-1}\quad,\quad S_Y^2=\dfrac{\sum Y^2-n\bar{Y}^2}{n-1}\)</div></div>
+        <div class="law-card"><div class="law-name">🔗 معامل الارتباط</div><div class="law-formula">\(r=\dfrac{\sum XY-n\bar{X}\bar{Y}}{\sqrt{(\sum X^2-n\bar{X}^2)(\sum Y^2-n\bar{Y}^2)}}\)</div></div>
+        <div class="law-card"><div class="law-name">📈 معامل الانحدار \(\beta\)</div><div class="law-formula">\(\beta=\dfrac{\sum XY-n\bar{X}\bar{Y}}{\sum X^2-n\bar{X}^2}\)</div></div>
+        <div class="law-card"><div class="law-name">📌 الجزء المقطوع \(a\)</div><div class="law-formula">\(a=\bar{Y}-\beta\bar{X}\)</div></div>
+        <div class="law-card"><div class="law-name">📏 معادلة الانحدار</div><div class="law-formula">\(\hat{Y}=a+\beta X\)</div></div>
+
+        <div style="text-align:center;"><span class="section-title">📖 مثال محلول بالتفصيل</span></div>
+        <div class="step-item">
+            <div class="step-title">📝 نص السؤال</div>
+            <div class="data-box">لدينا 5 مشاهدات (n=5) لمتغير الخبرة (X) والراتب (Y). المجاميع:<br>
+            \(\sum X=200,\;\sum Y=450,\;\sum XY=18500,\;\sum X^2=8500,\;\sum Y^2=41500\)</div>
+            <p style="margin-top:8px;">المطلوب: الوسطان، التباينان، r، β، a، معادلة الانحدار، التنبؤ عند X=12.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-title">1. الوسط الحسابي</div>
+            <div class="law-line">القانون: \(\bar{X}=\dfrac{\sum X}{n},\quad\bar{Y}=\dfrac{\sum Y}{n}\)</div>
+            <div class="substitution-line">\(\bar{X}=\dfrac{200}{5}=40,\quad\bar{Y}=\dfrac{450}{5}=90\)</div>
+            <div class="result">\(\bar{X}=40,\;\bar{Y}=90\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">2. تباين X</div>
+            <div class="law-line">القانون: \(S_X^2=\dfrac{\sum X^2-n\bar{X}^2}{n-1}\)</div>
+            <div class="substitution-line">\(S_X^2=\dfrac{8500-5\times1600}{4}=\dfrac{500}{4}=125\)</div>
+            <div class="result">\(S_X^2=125\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">3. تباين Y</div>
+            <div class="law-line">القانون: \(S_Y^2=\dfrac{\sum Y^2-n\bar{Y}^2}{n-1}\)</div>
+            <div class="substitution-line">\(S_Y^2=\dfrac{41500-5\times8100}{4}=\dfrac{1000}{4}=250\)</div>
+            <div class="result">\(S_Y^2=250\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">4. معامل الارتباط r</div>
+            <div class="law-line">القانون: \(r=\dfrac{\sum XY-n\bar{X}\bar{Y}}{\sqrt{(\sum X^2-n\bar{X}^2)(\sum Y^2-n\bar{Y}^2)}}\)</div>
+            <div class="substitution-line">\(r=\dfrac{18500-18000}{\sqrt{500\times1000}}=\dfrac{500}{707.11}\approx0.707\)</div>
+            <div class="result">\(r\approx0.707\) — ارتباط طردي متوسط إلى قوي</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">5. معامل الانحدار β</div>
+            <div class="law-line">القانون: \(\beta=\dfrac{\sum XY-n\bar{X}\bar{Y}}{\sum X^2-n\bar{X}^2}\)</div>
+            <div class="substitution-line">\(\beta=\dfrac{500}{500}=1\)</div>
+            <div class="result">\(\beta=1\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">6. الجزء المقطوع a</div>
+            <div class="law-line">القانون: \(a=\bar{Y}-\beta\bar{X}\)</div>
+            <div class="substitution-line">\(a=90-1\times40=50\)</div>
+            <div class="result">\(a=50\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">7. معادلة الانحدار والتنبؤ</div>
+            <div class="law-line">\(\hat{Y}=50+1\cdot X\)</div>
+            <div class="substitution-line">عند \(X=12\): \(\hat{Y}=50+12=62\)</div>
+            <div class="result">الراتب المتوقع = 62</div>
+        </div>
+
+        <div style="text-align:center;"><span class="section-title">🧪 اختبار تدريبي</span></div>
+        <div style="background:#fef5e6;border-radius:25px;padding:10px;margin-bottom:15px;text-align:center;">
+            <strong>📊 البيانات (للأسئلة 1–8):</strong><br>
+            \(n=5,\quad\sum X=300,\;\sum Y=600,\;\sum XY=37000,\;\sum X^2=18500,\;\sum Y^2=72500\)
+        </div>
+        <div class="quiz-question"><p><strong>سؤال 1:</strong> الوسط \(\bar{X}\) يساوي:</p><div class="options"><div class="option">أ) 50</div><div class="option correct-option">ب) 60</div><div class="option">ج) 70</div><div class="option">د) 80</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 2:</strong> الوسط \(\bar{Y}\) يساوي:</p><div class="options"><div class="option">أ) 100</div><div class="option">ب) 110</div><div class="option correct-option">ج) 120</div><div class="option">د) 130</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 3:</strong> تباين \(S_X^2\) يساوي:</p><div class="options"><div class="option">أ) 100</div><div class="option correct-option">ب) 125</div><div class="option">ج) 150</div><div class="option">د) 175</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 4:</strong> تباين \(S_Y^2\) يساوي:</p><div class="options"><div class="option">أ) 100</div><div class="option">ب) 110</div><div class="option correct-option">ج) 125</div><div class="option">د) 140</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 5:</strong> معامل الارتباط \(r\) يساوي:</p><div class="options"><div class="option">أ) 0.5</div><div class="option">ب) 0.75</div><div class="option">ج) 0.9</div><div class="option correct-option">د) 1</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 6:</strong> معامل الانحدار \(\beta\) يساوي:</p><div class="options"><div class="option">أ) 1</div><div class="option correct-option">ب) 2</div><div class="option">ج) 3</div><div class="option">د) 4</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 7:</strong> الجزء المقطوع \(a\) يساوي:</p><div class="options"><div class="option">أ) 10</div><div class="option">ب) 5</div><div class="option correct-option">ج) 0</div><div class="option">د) -5</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 8:</strong> قيمة \(\hat{Y}\) عند \(X=15\) تساوي:</p><div class="options"><div class="option">أ) 15</div><div class="option">ب) 20</div><div class="option correct-option">ج) 30</div><div class="option">د) 45</div></div></div>
+    </div>
+
+    <footer>
+        📖 مراجعة شاملة: مقاييس النزعة المركزية – مقاييس التشتت – الانحدار والارتباط<br>
+        إعداد د. محمد المتولي سليم – نظم معلومات الأعمال – المستوى الرابع<br>
+        قم بحل الأسئلة بنفسك ثم راجع الإجابات الصحيحة (المظللة باللون الأخضر). عند الطباعة اختر "حفظ كـ PDF" وورق A4.
+    </footer>
+</div>
+
+<script>
+function showTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+    if (window.MathJax) { MathJax.typesetPromise([document.getElementById(tabId)]); }
+}
+</script>
+</body>
+</html>

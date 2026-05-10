@@ -429,15 +429,14 @@
         <div class="law-card">
             <div class="law-name">📍 الوسيط للبيانات المبوبة</div>
             <div class="law-formula">
-                \[ Me = L + \frac{\dfrac{n}{2} - F_1}{F_2 - F_0} \times h \]
+                \[ Me = L + \frac{\dfrac{n}{2} - F_1}{f_m} \times h \]
             </div>
             <div class="law-note" style="text-align:right; padding: 10px 15px; line-height:2;">
                 <strong>L</strong> = الحد الأدنى للفئة الوسيطة &nbsp;&nbsp;
                 <strong>h</strong> = طول الفئة &nbsp;&nbsp;
                 <strong>n</strong> = مجموع التكرارات<br>
-                <strong>F₁</strong> = التكرار المتراكم للفئة <u>السابقة</u> مباشرةً للفئة الوسيطة &nbsp;← <em>تكرار سابق</em><br>
-                <strong>F₂</strong> = التكرار المتراكم <u>للفئة الوسيطة</u> نفسها &nbsp;← <em>تكرار لاحق</em><br>
-                <strong>F₀</strong> = التكرار المتراكم للفئة <u>التي قبل السابقة</u> &nbsp;← <em>تكرار أسبق</em>
+                <strong>F₁</strong> = المتجمع الصاعد (أقل من) للفئة <u>السابقة</u> للفئة الوسيطة<br>
+                <strong>f_m</strong> = تكرار الفئة الوسيطة نفسها
             </div>
         </div>
 
@@ -448,18 +447,18 @@
         </div>
 
         <!-- ---- مثال مبوب قيم مفردة ---- -->
-        <div style="text-align:center;"><span class="section-title">📖 مثال (2) – بيانات مبوبة (قيم مفردة)</span></div>
+        <div style="text-align:center;"><span class="section-title">📖 مثال (2) – بيانات مبوبة (جدول ذو فئات)</span></div>
         <div class="step-item">
             <div class="step-title">📝 نص السؤال</div>
             <div class="data-box">
                 <table class="tbl">
-                    <tr><th>القيمة (x)</th><th>التكرار (f)</th><th>f × x</th><th>التكرار المتراكم</th></tr>
-                    <tr><td>10</td><td>3</td><td>30</td><td>3</td></tr>
-                    <tr><td>20</td><td>7</td><td>140</td><td>10</td></tr>
-                    <tr><td>30</td><td>12</td><td>360</td><td>22</td></tr>
-                    <tr><td>40</td><td>6</td><td>240</td><td>28</td></tr>
-                    <tr><td>50</td><td>2</td><td>100</td><td>30</td></tr>
-                    <tr class="total"><td>المجموع</td><td>30</td><td>870</td><td>—</td></tr>
+                    <tr><th>الفئة</th><th>f</th><th>x (مركز الفئة)</th><th>f × x</th></tr>
+                    <tr><td>10 – 20</td><td>3</td><td>15</td><td>45</td></tr>
+                    <tr><td>20 – 30</td><td>7</td><td>25</td><td>175</td></tr>
+                    <tr><td>30 – 40</td><td>12</td><td>35</td><td>420</td></tr>
+                    <tr><td>40 – 50</td><td>6</td><td>45</td><td>270</td></tr>
+                    <tr><td>50 – 60</td><td>2</td><td>55</td><td>110</td></tr>
+                    <tr class="total"><td>المجموع</td><td>30</td><td>—</td><td>1020</td></tr>
                 </table>
             </div>
             <p style="margin-top:8px;">المطلوب: الوسط الحسابي، الوسيط، المنوال.</p>
@@ -467,18 +466,41 @@
         <div class="step-item">
             <div class="step-title">1. الوسط الحسابي</div>
             <div class="law-line">القانون: \(\bar{X}=\dfrac{\sum f\cdot x}{\sum f}\)</div>
-            <div class="substitution-line">\(\bar{X}=\dfrac{870}{30}=29\)</div>
-            <div class="result">\(\bar{X}=29\)</div>
+            <div class="substitution-line">\(\bar{X}=\dfrac{1020}{30}=34\)</div>
+            <div class="result">\(\bar{X}=34\)</div>
         </div>
         <div class="step-item">
             <div class="step-title">2. الوسيط</div>
-            <div class="law-line">\(\dfrac{n}{2}=\dfrac{30}{2}=15\) &rarr; أول تكرار متراكم &ge; 15 هو 22 &rarr; القيمة المقابلة = 30</div>
-            <div class="result">الوسيط = 30</div>
+            <div class="law-line">القانون: \(Me=L+\dfrac{\frac{n}{2}-F_1}{f_m}\times h\)</div>
+            <p style="margin:8px 0 4px; font-size:0.9rem;">أولاً: نبني جدول المتجمع الصاعد (أقل من):</p>
+            <div style="overflow-x:auto;">
+                <table class="tbl" style="margin:6px auto;">
+                    <tr><th>الفئة</th><th>f</th><th>أقل من (متجمع صاعد)</th></tr>
+                    <tr><td>10 – 20</td><td>3</td><td>0</td></tr>
+                    <tr><td>20 – 30</td><td>7</td><td>3</td></tr>
+                    <tr style="background:#fff9c4;font-weight:bold;"><td>30 – 40 ★</td><td>12</td><td>10</td></tr>
+                    <tr><td>40 – 50</td><td>6</td><td>22</td></tr>
+                    <tr><td>50 – 60</td><td>2</td><td>28</td></tr>
+                    <tr class="total"><td>المجموع</td><td>30</td><td>—</td></tr>
+                </table>
+            </div>
+            <div class="substitution-line">
+                \(\dfrac{n}{2}=\dfrac{30}{2}=15\)<br>
+                أول قيمة في عمود "أقل من" تتجاوز 15 هي 22 &rarr; الفئة الوسيطة <strong>(30–40) ★</strong><br>
+                F₁ (سابق) = 10 &nbsp;|&nbsp; f_m (تكرار الفئة الوسيطة) = 12 &nbsp;|&nbsp; L = 30 &nbsp;|&nbsp; h = 10<br>
+                \(Me=30+\dfrac{15-10}{12}\times10=30+\dfrac{5}{12}\times10=30+4.17\approx34.17\)
+            </div>
+            <div class="result">الوسيط &asymp; 34.17</div>
         </div>
         <div class="step-item">
             <div class="step-title">3. المنوال</div>
-            <div class="substitution-line">القيمة 30 تكررت 12 مرة (الأعلى تكراراً)</div>
-            <div class="result">المنوال = 30</div>
+            <div class="law-line">القانون: \(Mo=L+\dfrac{d_1}{d_1+d_2}\times h\)</div>
+            <div class="substitution-line">
+                الفئة المنوالية (30–40) تكرارها 12 (الأعلى)<br>
+                d₁ = 12 − 7 = 5 &nbsp;|&nbsp; d₂ = 12 − 6 = 6 &nbsp;|&nbsp; h = 10<br>
+                \(Mo=30+\dfrac{5}{5+6}\times10=30+\dfrac{5}{11}\times10=30+4.55\approx34.55\)
+            </div>
+            <div class="result">المنوال &asymp; 34.55</div>
         </div>
 
         <!-- ---- مثال مبوب جدول فئات ---- -->
@@ -506,15 +528,26 @@
         </div>
         <div class="step-item">
             <div class="step-title">2. الوسيط</div>
-            <div class="law-line">
-                القانون: \(Me=L+\dfrac{\frac{n}{2}-F_1}{F_2-F_0}\times h\)
+            <div class="law-line">القانون: \(Me=L+\dfrac{\frac{n}{2}-F_1}{f_m}\times h\)</div>
+            <p style="margin:8px 0 4px; font-size:0.9rem;">أولاً: نبني جدول المتجمع الصاعد (أقل من):</p>
+            <div style="overflow-x:auto;">
+                <table class="tbl" style="margin:6px auto;">
+                    <tr><th>الفئة</th><th>f</th><th>أقل من (متجمع صاعد)</th></tr>
+                    <tr><td>10 – 20</td><td>4</td><td>0</td></tr>
+                    <tr><td>20 – 30</td><td>8</td><td>4</td></tr>
+                    <tr style="background:#fff9c4;font-weight:bold;"><td>30 – 40 ★</td><td>14</td><td>12</td></tr>
+                    <tr><td>40 – 50</td><td>10</td><td>26</td></tr>
+                    <tr><td>50 – 60</td><td>4</td><td>36</td></tr>
+                    <tr class="total"><td>المجموع</td><td>40</td><td>—</td></tr>
+                </table>
             </div>
             <div class="substitution-line">
-                \(\dfrac{n}{2}=20\) &rarr; أول تكرار متراكم &ge; 20 هو 26 &rarr; الفئة الوسيطة (30–40)<br>
-                L=30 &nbsp;|&nbsp; F₁ (تكرار سابق)=12 &nbsp;|&nbsp; F₂ (تكرار لاحق)=26 &nbsp;|&nbsp; F₀ (تكرار أسبق)=4 &nbsp;|&nbsp; h=10<br>
-                \(Me=30+\dfrac{20-12}{26-4}\times10=30+\dfrac{8}{22}\times10=30+3.64\approx33.64\)
+                \(\dfrac{n}{2}=\dfrac{40}{2}=20\)<br>
+                أول قيمة في عمود "أقل من" تتجاوز 20 هي 26 &rarr; الفئة الوسيطة <strong>(30–40) ★</strong><br>
+                F₁ (سابق) = 12 &nbsp;|&nbsp; f_m (تكرار الفئة الوسيطة) = 14 &nbsp;|&nbsp; L = 30 &nbsp;|&nbsp; h = 10<br>
+                \(Me=30+\dfrac{20-12}{14}\times10=30+\dfrac{8}{14}\times10=30+5.71\approx35.71\)
             </div>
-            <div class="result">الوسيط &asymp; 33.64</div>
+            <div class="result">الوسيط &asymp; 35.71</div>
         </div>
         <div class="step-item">
             <div class="step-title">3. المنوال</div>
@@ -552,9 +585,31 @@
             \(\bar{X}=25\)
         </div>
         <div class="quiz-question"><p><strong>سؤال 4:</strong> الوسط الحسابي المرجح يساوي:</p><div class="options"><div class="option">أ) 20</div><div class="option correct-option">ب) 25</div><div class="option">ج) 27</div><div class="option">د) 30</div></div></div>
-        <div class="quiz-question"><p><strong>سؤال 5:</strong> الوسيط (الفئة الوسيطة 20–30، L=20، F₁=15، F₂=35، F₀=5، h=10) يساوي:</p><div class="options"><div class="option">أ) 20</div><div class="option">ب) 22</div><div class="option correct-option">ج) 22.5</div><div class="option">د) 25</div></div></div>
+        <div class="quiz-question">
+            <p><strong>سؤال 5:</strong> الوسيط للجدول أعلاه يساوي:</p>
+            <p style="margin:6px 0 4px; font-size:0.88rem; font-weight:normal;">جدول المتجمع الصاعد (أقل من):</p>
+            <div style="overflow-x:auto;">
+                <table class="tbl" style="margin:4px auto 8px;">
+                    <tr><th>الفئة</th><th>f</th><th>أقل من</th></tr>
+                    <tr><td>0 – 10</td><td>5</td><td>0</td></tr>
+                    <tr><td>10 – 20</td><td>10</td><td>5</td></tr>
+                    <tr style="background:#fff9c4;font-weight:bold;"><td>20 – 30 ★</td><td>20</td><td>15</td></tr>
+                    <tr><td>30 – 40</td><td>10</td><td>35</td></tr>
+                    <tr><td>40 – 50</td><td>5</td><td>45</td></tr>
+                </table>
+            </div>
+            <small style="color:#666;">n/2=25 → أول قيمة تتجاوز 25 هي 35 → الفئة الوسيطة (20–30) ★<br>
+            F₁=15 &nbsp;|&nbsp; f_m=20 &nbsp;|&nbsp; L=20 &nbsp;|&nbsp; h=10<br>
+            \(Me=20+\dfrac{25-15}{20}\times10=20+\dfrac{10}{20}\times10=20+5=25\)</small>
+            <div class="options" style="margin-top:8px;">
+                <div class="option">أ) 20</div>
+                <div class="option">ب) 22</div>
+                <div class="option">ج) 23.33</div>
+                <div class="option correct-option">د) 25</div>
+            </div>
+        </div>
         <div class="quiz-question"><p><strong>سؤال 6:</strong> المنوال (الفئة المنوالية 20–30، d₁=10، d₂=10، h=10) يساوي:</p><div class="options"><div class="option">أ) 20</div><div class="option correct-option">ب) 25</div><div class="option">ج) 27</div><div class="option">د) 30</div></div></div>
-    </div>
+    </div><!-- end tab-central -->
 
     <!-- ============================================================ -->
     <!-- TAB 2 : مقاييس التشتت                                       -->
@@ -577,7 +632,7 @@
             <div class="step-title">📝 نص السؤال</div>
             <div class="data-box">
                 رواتب 6 موظفين (بالألف جنيه): <strong>8، 12، 10، 15، 9، 14</strong> &nbsp; (n=6)<br>
-                \(\sum X=68,\quad\sum X^2=806\)
+                \(\sum X=68,\quad\sum X^2=810\)
             </div>
             <p style="margin-top:8px;">المطلوب: المدى، التباين، الانحراف المعياري.</p>
         </div>
@@ -595,14 +650,14 @@
         <div class="step-item">
             <div class="step-title">3. التباين \(S^2\)</div>
             <div class="law-line">القانون: \(S^2=\dfrac{\sum X^2-n\bar{X}^2}{n-1}\)</div>
-            <div class="substitution-line">\(S^2=\dfrac{806-6\times(11.33)^2}{5}=\dfrac{806-769.87}{5}=\dfrac{36.13}{5}\approx7.23\)</div>
-            <div class="result">\(S^2\approx7.23\)</div>
+            <div class="substitution-line">\(S^2=\dfrac{810-6\times(11.33)^2}{5}=\dfrac{810-770.67}{5}=\dfrac{39.33}{5}\approx7.87\)</div>
+            <div class="result">\(S^2\approx7.87\)</div>
         </div>
         <div class="step-item">
             <div class="step-title">4. الانحراف المعياري</div>
             <div class="law-line">القانون: \(S=\sqrt{S^2}\)</div>
-            <div class="substitution-line">\(S=\sqrt{7.23}\approx2.69\)</div>
-            <div class="result">\(S\approx2.69\)</div>
+            <div class="substitution-line">\(S=\sqrt{7.87}\approx2.81\)</div>
+            <div class="result">\(S\approx2.81\)</div>
         </div>
 
         <!-- ---- قوانين مبوبة ---- -->
@@ -614,38 +669,41 @@
         </div>
         <div class="law-card"><div class="law-name">📉 الانحراف المعياري للبيانات المبوبة</div><div class="law-formula">\(S=\sqrt{\dfrac{\sum f\cdot x^2-n\bar{X}^2}{n-1}}\)</div></div>
 
-        <!-- ---- مثال مبوب قيم مفردة ---- -->
-        <div style="text-align:center;"><span class="section-title">📖 مثال (2) – بيانات مبوبة (قيم مفردة)</span></div>
+        <!-- ---- مثال مبوب جدول فئات ---- -->
+        <div style="text-align:center;"><span class="section-title">📖 مثال (2) – بيانات مبوبة (جدول ذو فئات)</span></div>
         <div class="step-item">
             <div class="step-title">📝 نص السؤال</div>
             <div class="data-box">
                 <table class="tbl">
-                    <tr><th>القيمة (x)</th><th>f</th><th>f×x</th><th>x²</th><th>f×x²</th></tr>
-                    <tr><td>5</td><td>4</td><td>20</td><td>25</td><td>100</td></tr>
-                    <tr><td>10</td><td>6</td><td>60</td><td>100</td><td>600</td></tr>
-                    <tr><td>15</td><td>10</td><td>150</td><td>225</td><td>2250</td></tr>
-                    <tr><td>20</td><td>6</td><td>120</td><td>400</td><td>2400</td></tr>
-                    <tr><td>25</td><td>4</td><td>100</td><td>625</td><td>2500</td></tr>
-                    <tr class="total"><td>المجموع</td><td>30</td><td>450</td><td>—</td><td>7850</td></tr>
+                    <tr><th>الفئة</th><th>f</th><th>x (مركز الفئة)</th><th>f×x</th><th>x²</th><th>f×x²</th></tr>
+                    <tr><td>10 – 20</td><td>3</td><td>15</td><td>45</td><td>225</td><td>675</td></tr>
+                    <tr><td>20 – 30</td><td>7</td><td>25</td><td>175</td><td>625</td><td>4375</td></tr>
+                    <tr><td>30 – 40</td><td>12</td><td>35</td><td>420</td><td>1225</td><td>14700</td></tr>
+                    <tr><td>40 – 50</td><td>6</td><td>45</td><td>270</td><td>2025</td><td>12150</td></tr>
+                    <tr><td>50 – 60</td><td>2</td><td>55</td><td>110</td><td>3025</td><td>6050</td></tr>
+                    <tr class="total"><td>المجموع</td><td>30</td><td>—</td><td>1020</td><td>—</td><td>37950</td></tr>
                 </table>
             </div>
             <p style="margin-top:8px;">المطلوب: التباين، الانحراف المعياري.</p>
         </div>
         <div class="step-item">
             <div class="step-title">1. الوسط الحسابي</div>
-            <div class="law-line">\(\bar{X}=\dfrac{450}{30}=15\)</div>
-            <div class="result">\(\bar{X}=15\)</div>
+            <div class="law-line">\(\bar{X}=\dfrac{1020}{30}=34\)</div>
+            <div class="result">\(\bar{X}=34\)</div>
         </div>
         <div class="step-item">
             <div class="step-title">2. التباين \(S^2\)</div>
             <div class="law-line">القانون: \(S^2=\dfrac{\sum f\cdot x^2-n\bar{X}^2}{n-1}\)</div>
-            <div class="substitution-line">\(S^2=\dfrac{7850-30\times225}{29}=\dfrac{7850-6750}{29}=\dfrac{1100}{29}\approx37.93\)</div>
-            <div class="result">\(S^2\approx37.93\)</div>
+            <div class="substitution-line">
+                \(n\bar{X}^2=30\times(34)^2=30\times1156=34680\)<br>
+                \(S^2=\dfrac{37950-34680}{29}=\dfrac{3270}{29}\approx112.76\)
+            </div>
+            <div class="result">\(S^2\approx112.76\)</div>
         </div>
         <div class="step-item">
             <div class="step-title">3. الانحراف المعياري</div>
-            <div class="law-line">\(S=\sqrt{37.93}\approx6.16\)</div>
-            <div class="result">\(S\approx6.16\)</div>
+            <div class="law-line">\(S=\sqrt{112.76}\approx10.62\)</div>
+            <div class="result">\(S\approx10.62\)</div>
         </div>
 
         <!-- ---- مثال مبوب جدول فئات ---- -->
@@ -711,8 +769,8 @@
             \(\bar{X}=25\)
         </div>
         <div class="quiz-question"><p><strong>سؤال 4:</strong> المدى التقريبي للبيانات المبوبة يساوي:</p><div class="options"><div class="option">أ) 30</div><div class="option">ب) 35</div><div class="option correct-option">ج) 40</div><div class="option">د) 50</div></div></div>
-        <div class="quiz-question"><p><strong>سؤال 5:</strong> تباين العينة \(S^2\) يساوي تقريباً:</p><div class="options"><div class="option">أ) 100</div><div class="option correct-option">ب) 127.55</div><div class="option">ج) 150</div><div class="option">د) 200</div></div></div>
-        <div class="quiz-question"><p><strong>سؤال 6:</strong> الانحراف المعياري S يساوي تقريباً:</p><div class="options"><div class="option">أ) 10</div><div class="option correct-option">ب) 11.29</div><div class="option">ج) 12.5</div><div class="option">د) 14</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 5:</strong> تباين العينة \(S^2\) يساوي تقريباً:<br><small style="color:#888;">\(S^2=\dfrac{37250-50\times625}{49}=\dfrac{37250-31250}{49}=\dfrac{6000}{49}\approx122.45\)</small></p><div class="options"><div class="option">أ) 100</div><div class="option">ب) 115</div><div class="option correct-option">ج) 122.45</div><div class="option">د) 150</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 6:</strong> الانحراف المعياري S يساوي تقريباً:<br><small style="color:#888;">\(S=\sqrt{122.45}\approx11.07\)</small></p><div class="options"><div class="option">أ) 10</div><div class="option correct-option">ب) 11.07</div><div class="option">ج) 12.5</div><div class="option">د) 14</div></div></div>
     </div>
 
     <!-- ============================================================ -->
@@ -781,16 +839,16 @@
         <div style="text-align:center;"><span class="section-title">🧪 اختبار تدريبي</span></div>
         <div style="background:#fef5e6;border-radius:25px;padding:10px;margin-bottom:15px;text-align:center;">
             <strong>📊 البيانات (للأسئلة 1–8):</strong><br>
-            \(n=5,\quad\sum X=300,\;\sum Y=600,\;\sum XY=37000,\;\sum X^2=18500,\;\sum Y^2=72500\)
+            \(n=5,\quad\sum X=300,\;\sum Y=600,\;\sum XY=36500,\;\sum X^2=18500,\;\sum Y^2=72500\)
         </div>
         <div class="quiz-question"><p><strong>سؤال 1:</strong> الوسط \(\bar{X}\) يساوي:</p><div class="options"><div class="option">أ) 50</div><div class="option correct-option">ب) 60</div><div class="option">ج) 70</div><div class="option">د) 80</div></div></div>
         <div class="quiz-question"><p><strong>سؤال 2:</strong> الوسط \(\bar{Y}\) يساوي:</p><div class="options"><div class="option">أ) 100</div><div class="option">ب) 110</div><div class="option correct-option">ج) 120</div><div class="option">د) 130</div></div></div>
-        <div class="quiz-question"><p><strong>سؤال 3:</strong> تباين \(S_X^2\) يساوي:</p><div class="options"><div class="option">أ) 100</div><div class="option correct-option">ب) 125</div><div class="option">ج) 150</div><div class="option">د) 175</div></div></div>
-        <div class="quiz-question"><p><strong>سؤال 4:</strong> تباين \(S_Y^2\) يساوي:</p><div class="options"><div class="option">أ) 100</div><div class="option">ب) 110</div><div class="option correct-option">ج) 125</div><div class="option">د) 140</div></div></div>
-        <div class="quiz-question"><p><strong>سؤال 5:</strong> معامل الارتباط \(r\) يساوي:</p><div class="options"><div class="option">أ) 0.5</div><div class="option">ب) 0.75</div><div class="option">ج) 0.9</div><div class="option correct-option">د) 1</div></div></div>
-        <div class="quiz-question"><p><strong>سؤال 6:</strong> معامل الانحدار \(\beta\) يساوي:</p><div class="options"><div class="option">أ) 1</div><div class="option correct-option">ب) 2</div><div class="option">ج) 3</div><div class="option">د) 4</div></div></div>
-        <div class="quiz-question"><p><strong>سؤال 7:</strong> الجزء المقطوع \(a\) يساوي:</p><div class="options"><div class="option">أ) 10</div><div class="option">ب) 5</div><div class="option correct-option">ج) 0</div><div class="option">د) -5</div></div></div>
-        <div class="quiz-question"><p><strong>سؤال 8:</strong> قيمة \(\hat{Y}\) عند \(X=15\) تساوي:</p><div class="options"><div class="option">أ) 15</div><div class="option">ب) 20</div><div class="option correct-option">ج) 30</div><div class="option">د) 45</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 3:</strong> تباين \(S_X^2\) يساوي:<br><small style="color:#888;">\(\dfrac{18500-5\times3600}{4}=\dfrac{500}{4}=125\)</small></p><div class="options"><div class="option">أ) 100</div><div class="option correct-option">ب) 125</div><div class="option">ج) 150</div><div class="option">د) 175</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 4:</strong> تباين \(S_Y^2\) يساوي:<br><small style="color:#888;">\(\dfrac{72500-5\times14400}{4}=\dfrac{500}{4}=125\)</small></p><div class="options"><div class="option">أ) 100</div><div class="option correct-option">ب) 125</div><div class="option">ج) 150</div><div class="option">د) 175</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 5:</strong> معامل الارتباط \(r\) يساوي:<br><small style="color:#888;">\(r=\dfrac{36500-5\times60\times120}{\sqrt{500\times500}}=\dfrac{500}{500}=1\)</small></p><div class="options"><div class="option">أ) 0.5</div><div class="option">ب) 0.75</div><div class="option">ج) 0.9</div><div class="option correct-option">د) 1</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 6:</strong> معامل الانحدار \(\beta\) يساوي:<br><small style="color:#888;">\(\beta=\dfrac{500}{500}=1\)</small></p><div class="options"><div class="option correct-option">أ) 1</div><div class="option">ب) 2</div><div class="option">ج) 3</div><div class="option">د) 4</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 7:</strong> الجزء المقطوع \(a\) يساوي:<br><small style="color:#888;">\(a=120-1\times60=60\)</small></p><div class="options"><div class="option">أ) 30</div><div class="option">ب) 45</div><div class="option correct-option">ج) 60</div><div class="option">د) 75</div></div></div>
+        <div class="quiz-question"><p><strong>سؤال 8:</strong> قيمة \(\hat{Y}\) عند \(X=15\) تساوي:<br><small style="color:#888;">\(\hat{Y}=60+1\times15=75\)</small></p><div class="options"><div class="option">أ) 60</div><div class="option">ب) 65</div><div class="option">ج) 70</div><div class="option correct-option">د) 75</div></div></div>
     </div>
 
     <footer>

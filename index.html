@@ -447,44 +447,85 @@
             <div class="law-note">d₁ = تكرار المنوال − تكرار الفئة السابقة &nbsp;|&nbsp; d₂ = تكرار المنوال − تكرار الفئة التالية</div>
         </div>
 
-         <!-- ---- مثال مبوب جدول فئات ---- -->
+        <!-- ---- مثال مبوب قيم مفردة ---- -->
+        <div style="text-align:center;"><span class="section-title">📖 مثال (2) – بيانات مبوبة (قيم مفردة)</span></div>
+        <div class="step-item">
+            <div class="step-title">📝 نص السؤال</div>
+            <div class="data-box">
+                <table class="tbl">
+                    <tr><th>القيمة (x)</th><th>التكرار (f)</th><th>f × x</th><th>التكرار المتراكم</th></tr>
+                    <tr><td>10</td><td>3</td><td>30</td><td>3</td></tr>
+                    <tr><td>20</td><td>7</td><td>140</td><td>10</td></tr>
+                    <tr><td>30</td><td>12</td><td>360</td><td>22</td></tr>
+                    <tr><td>40</td><td>6</td><td>240</td><td>28</td></tr>
+                    <tr><td>50</td><td>2</td><td>100</td><td>30</td></tr>
+                    <tr class="total"><td>المجموع</td><td>30</td><td>870</td><td>—</td></tr>
+                </table>
+            </div>
+            <p style="margin-top:8px;">المطلوب: الوسط الحسابي، الوسيط، المنوال.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-title">1. الوسط الحسابي</div>
+            <div class="law-line">القانون: \(\bar{X}=\dfrac{\sum f\cdot x}{\sum f}\)</div>
+            <div class="substitution-line">\(\bar{X}=\dfrac{870}{30}=29\)</div>
+            <div class="result">\(\bar{X}=29\)</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">2. الوسيط</div>
+            <div class="law-line">\(\dfrac{n}{2}=\dfrac{30}{2}=15\) &rarr; أول تكرار متراكم &ge; 15 هو 22 &rarr; القيمة المقابلة = 30</div>
+            <div class="result">الوسيط = 30</div>
+        </div>
+        <div class="step-item">
+            <div class="step-title">3. المنوال</div>
+            <div class="substitution-line">القيمة 30 تكررت 12 مرة (الأعلى تكراراً)</div>
+            <div class="result">المنوال = 30</div>
+        </div>
+
+        <!-- ---- مثال مبوب جدول فئات ---- -->
         <div style="text-align:center;"><span class="section-title">📖 مثال (3) – بيانات مبوبة (جدول ذو فئات)</span></div>
         <div class="step-item">
             <div class="step-title">📝 نص السؤال</div>
             <div class="data-box">
                 <table class="tbl">
-                    <tr><th>الفئة</th><th>f</th><th>x (مركز الفئة)</th><th>f×x</th><th>x²</th><th>f×x²</th></tr>
-                    <tr><td>10–20</td><td>4</td><td>15</td><td>60</td><td>225</td><td>900</td></tr>
-                    <tr><td>20–30</td><td>8</td><td>25</td><td>200</td><td>625</td><td>5000</td></tr>
-                    <tr><td>30–40</td><td>14</td><td>35</td><td>490</td><td>1225</td><td>17150</td></tr>
-                    <tr><td>40–50</td><td>10</td><td>45</td><td>450</td><td>2025</td><td>20250</td></tr>
-                    <tr><td>50–60</td><td>4</td><td>55</td><td>220</td><td>3025</td><td>12100</td></tr>
-                    <tr class="total"><td>المجموع</td><td>40</td><td>—</td><td>1420</td><td>—</td><td>55400</td></tr>
+                    <tr><th>الفئة</th><th>f</th><th>x (مركز الفئة)</th><th>f×x</th><th>تكرار متراكم</th></tr>
+                    <tr><td>10 – 20</td><td>4</td><td>15</td><td>60</td><td>4</td></tr>
+                    <tr><td>20 – 30</td><td>8</td><td>25</td><td>200</td><td>12</td></tr>
+                    <tr><td>30 – 40</td><td>14</td><td>35</td><td>490</td><td>26</td></tr>
+                    <tr><td>40 – 50</td><td>10</td><td>45</td><td>450</td><td>36</td></tr>
+                    <tr><td>50 – 60</td><td>4</td><td>55</td><td>220</td><td>40</td></tr>
+                    <tr class="total"><td>المجموع</td><td>40</td><td>—</td><td>1420</td><td>—</td></tr>
                 </table>
             </div>
-            <p style="margin-top:8px;">المطلوب: التباين، الانحراف المعياري.</p>
+            <p style="margin-top:8px;">المطلوب: الوسط الحسابي، الوسيط، المنوال.</p>
         </div>
         <div class="step-item">
             <div class="step-title">1. الوسط الحسابي</div>
-            <div class="law-line">\(\bar{X}=\dfrac{1420}{40}=35.5\)</div>
+            <div class="law-line">القانون: \(\bar{X}=\dfrac{\sum f\cdot x}{\sum f}\)</div>
+            <div class="substitution-line">\(\bar{X}=\dfrac{1420}{40}=35.5\)</div>
             <div class="result">\(\bar{X}=35.5\)</div>
         </div>
         <div class="step-item">
-            <div class="step-title">2. التباين \(S^2\)</div>
-            <div class="law-line">القانون: \(S^2=\dfrac{\sum f\cdot x^2-n\bar{X}^2}{n-1}\)</div>
-            <div class="substitution-line">
-                \(n\bar{X}^2=40\times(35.5)^2=40\times1260.25=50410\)<br>
-                \(S^2=\dfrac{55400-50410}{39}=\dfrac{4990}{39}\approx127.95\)
+            <div class="step-title">2. الوسيط</div>
+            <div class="law-line">
+                القانون: \(Me=L+\dfrac{\frac{n}{2}-F_1}{F_2-F_0}\times h\)
             </div>
-            <div class="result">\(S^2\approx127.95\)</div>
+            <div class="substitution-line">
+                \(\dfrac{n}{2}=20\) &rarr; أول تكرار متراكم &ge; 20 هو 26 &rarr; الفئة الوسيطة (30–40)<br>
+                L=30 &nbsp;|&nbsp; F₁ (تكرار سابق)=12 &nbsp;|&nbsp; F₂ (تكرار لاحق)=26 &nbsp;|&nbsp; F₀ (تكرار أسبق)=4 &nbsp;|&nbsp; h=10<br>
+                \(Me=30+\dfrac{20-12}{26-4}\times10=30+\dfrac{8}{22}\times10=30+3.64\approx33.64\)
+            </div>
+            <div class="result">الوسيط &asymp; 33.64</div>
         </div>
         <div class="step-item">
-            <div class="step-title">3. الانحراف المعياري</div>
-            <div class="law-line">\(S=\sqrt{127.95}\approx11.31\)</div>
-            <div class="result">\(S\approx11.31\)</div>
+            <div class="step-title">3. المنوال</div>
+            <div class="law-line">القانون: \(Mo=L+\dfrac{d_1}{d_1+d_2}\times h\)</div>
+            <div class="substitution-line">
+                الفئة المنوالية (30–40) تكرارها 14 (الأعلى)<br>
+                d₁=14−8=6 &nbsp;|&nbsp; d₂=14−10=4 &nbsp;|&nbsp; h=10<br>
+                \(Mo=30+\dfrac{6}{6+4}\times10=30+6=36\)
+            </div>
+            <div class="result">المنوال = 36</div>
         </div>
-
-
 
         <!-- ---- الاختبار ---- -->
         <div style="text-align:center;"><span class="section-title">🧪 اختبار تدريبي</span></div>
